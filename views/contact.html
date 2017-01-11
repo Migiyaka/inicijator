@@ -1,0 +1,41 @@
+<div class="dark section nopadding nomargin noborder ohidden" ng-init="init()">
+	<section id="page-title" class="page-title-dark">
+
+		<div class="container clearfix">
+			<h1>Kontakt</h1>
+			<span>Imate predlog, primedbu ili zamerku? Pošaljite nam email preko ove forme</span>
+		</div>
+
+	</section>
+	<section id="content">
+		<div class="content-wrap">
+			<div class="container clearfix">
+				<form id="contact-form" class="nobottommargin col-xs-8" ng-submit="submit()">
+					<div class="form-group clearfix">
+						<label for="title" class="col_one_sixth">Naslov *</label>
+						<input type="text" id="title" name="title" class="form-control col_five_sixth col_last" ng-model="title">
+					</div>
+					<div class="form-group clearfix">
+						<label for="text" class="col_one_sixth">Tekst *</label>
+						<textarea id="text" name="text" class="form-control col_five_sixth col_last" ng-model="text"></textarea>
+					</div>
+					<div class="form-group clearfix">
+						<div class="col_one_sixth"></div>
+						<div class="col_five_sixth col_last center topmargin-sm">
+							<div class="alert alert-success" ng-show="response && !error">
+								<i class="icon-gift"></i><strong>Hvala!</strong> <span>Primili smo vaš email.</span>
+							</div>
+							<div class="alert alert-danger" ng-show="response && error">
+								<i class="icon-remove-sign"></i><strong>Greška!</strong> <span>Email nije uspešno poslat.</span>
+							</div>
+							<div class="alert alert-danger" ng-show="fillError">
+								<i class="icon-remove-sign"></i><strong>Greška!</strong> <span>Molim vas popunite sva polja.</span>
+							</div>
+							<button type="submit" class="button button-xlarge button-dark button-rounded tright" ng-disabled="buttonDisabled"><i class="fa fa-circle-o-notch fa-spin" ng-show="loading"></i>Pošalji</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+</div>

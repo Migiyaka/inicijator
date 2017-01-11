@@ -1,0 +1,100 @@
+<div class="dark section nopadding nomargin noborder ohidden" ng-init="init()">
+	<section id="page-title" class="page-title-dark">
+
+		<div class="container clearfix">
+			<h1>Lista inicijativa</h1>
+			<span>Pregledajte i pretražite izlistane inicijative</span>
+		</div>
+
+	</section>
+	<section id="content">
+		<div class="content-wrap">
+			<div class="container clearfix">
+				<div class="sidebar nobottommargin">
+					<h4>Pretraži</h4>
+					<form id="search-list" ng-submit="submit()">
+						<div class="form-group">
+							<h6>Ključne reči</h6>
+							<input id="keywords" name="keywords" type="text" class="form-control" ng-model="keywords">
+						</div>
+						<div class="form-group">
+							<h6>Kategorija</h6>
+							<select id="category" name="category" class="category-select selectpicker" multiple>
+								<option value="Studije">Studije</option>
+								<option value="Život">Život</option>
+								<option value="Sport">Sport</option>
+								<option value="Ishrana">Ishrana</option>
+								<option value="Izlasci">Izlasci</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<h6>Vreme pokretanja</h6>
+							<div class="input-daterange input-group">
+								<label for="startdate_start">OD</label>
+								<input id="startdate_start" name="startdate_start" type="text" class="form-control tleft" placeholder="GGGG-MM-DD" ng-model="startdate_start">
+								<label for="startdate_end">DO</label>
+								<input id="startdate_end" name="startdate_end" type="text" class="form-control tleft" placeholder="GGGG-MM-DD" ng-model="startdate_end">
+							</div>
+						</div>
+						<div class="form-group">
+							<h6>Vreme završetka</h6>
+							<div class="input-daterange input-group">
+								<label for="enddate_start">OD</label>
+								<input id="enddate_start" name="enddate_start" type="text" class="form-control tleft" placeholder="GGGG-MM-DD" ng-model="enddate_start">
+								<label for="enddate_end">DO</label>
+								<input id="enddate_end" name="enddate_end" type="text" class="form-control tleft" placeholder="GGGG-MM-DD" ng-model="enddate_end">
+							</div>
+						</div>
+						<div class="form-group">
+							<h6>Sortiraj po</h6>
+							<select id="orderby" name="orderby" class="selectpicker">
+								<option value="start_date^desc">Datumu pokretanja, najnoviji</option>
+								<option value="start_date^asc">Datumu pokretanja, najstariji</option>
+								<option value="end_date^asc">Datumu završetka, najskoriji</option>
+								<option value="end_date^desc">Datumu završetka, najdalji</option>
+								<option value="sig_num^desc">Broju potpisa, opadajuće</option>
+								<option value="sig_num^asc">Broju potpisa, rastuće</option>
+							</select>
+						</div>
+						<input id="search-list-submit" type="submit" class="form-control" value="Pretraži">
+					</form>
+				</div>
+				<div class="postcontent nobottommargin col_last">
+					<p ng-show="isError">Nažalost, ne postoje inicijative sa zadatim parametrima pretrage. Pokušajte ponovo ili <a href="#/create">napravite novu inicijativu</a>.</p>
+					<div class="initiatives-wrapper" ng-show="!isError">
+						<div id="initiatives-list" class="portfolio grid-container portfolio-1 clearfix">
+							
+							<article class="portfolio-item clearfix" ng-repeat="(index, init) in results.initiatives" delayed-scripts>
+								<div class="portfolio-image">
+									<a href="#/single/{{init.id}}">
+										<img src="{{init.image_url}}" alt="">
+									</a>
+									<div class="portfolio-overlay">
+										<a href="{{init.image_url}}" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+										<a href="#/single/{{init.id}}" class="right-icon"><i class="icon-line-ellipsis"></i></a>
+									</div>
+								</div>
+								<div class="portfolio-desc">
+									<h3><a href="#/single/{{init.id}}">{{init.title}}</a></h3>
+									<span>{{init.category}}</span>
+									<p>{{init.text}}</p>
+									<ul class="iconlist">
+										<li><i class="icon-user"></i> <strong>Inicijator:</strong> <a href="#/profile/{{results.users[index].id}}">{{results.users[index].name}} {{results.users[index].surname}}</a></li>
+										<li><i class="icon-calendar3"></i> <strong>Pokrenuto:</strong> {{init.start_date}}</li>
+										<li><i class="icon-calendar3"></i> <strong>Završava se:</strong> {{init.end_date}}</li>
+										<li><i class="icon-thumbs-up"></i> <strong>Broj potpisa:</strong> {{results.signatories[index].length}}</li>
+									</ul>
+									<a href="#/single/{{init.id}}" class="button button-dark noleftmargin">Pogledaj detalje</a>
+								</div>
+							</article>
+							
+						</div>
+						<div class="pagination-container topmargin nobottommargin">
+							<ul class="pagination nomargin"></ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>

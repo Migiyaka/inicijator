@@ -1,0 +1,119 @@
+<div class="dark section nopadding nomargin noborder ohidden" ng-init="init()">
+	<section id="page-title" class="page-title-dark">
+
+		<div class="container clearfix">
+			<h1>Profil</h1>
+			<span>Saznajte više o odabranom korisniku</span>
+		</div>
+
+	</section>
+	<section id="content">
+		<div class="content-wrap">
+			<div class="container clearfix">
+				<p class="initiative-error" ng-show="pageError">Ne postoji traženi korisnik. Vratite se na <a href="#/home">početnu stranu</a>.</p>
+				<div class="tabs side-tabs clearfix" id="profile-page" ng-show="!pageError">
+
+					<ul class="tab-nav sidebar clearfix">
+						<li><a href="#user-info">Informacije o korisniku</a></li>
+						<li><a href="#created-init">Pokrenute inicijative</a></li>
+						<li><a href="#supported-init">Podržane inicijative</a></li>
+					</ul>
+
+					<div class="tab-container postcontent">
+
+						<div class="tab-content clearfix" id="user-info">
+							<table class="user-info">
+								<tr>
+									<td>Ime</td>
+									<td>{{userData.user.name}}</td>
+								</tr>
+								<tr>
+									<td>Prezime</td>
+									<td>{{userData.user.surname}}</td>
+								</tr>
+								<tr>
+									<td>Broj indeksa</td>
+									<td>{{userData.user.index_no}}</td>
+								</tr>
+								<tr>
+									<td>Email adresa</td>
+									<td><a href="mailto:{{userData.user.email}}" target="_blank">{{userData.user.email}}</a>
+								</tr>
+							</table>
+						</div>
+						<div class="tab-content clearfix" id="created-init">
+							<p ng-show="createdError">Korisnik još uvek nije pokrenuo nijednu inicijativu.</p>
+							<div class="initiatives-wrapper" ng-show="!createdError">
+								<div id="initiatives-list" class="portfolio grid-container portfolio-1 clearfix">
+									
+									<article class="portfolio-item clearfix" ng-repeat="(index, init) in userData.createdInits" delayed-scripts>
+										<div class="portfolio-image">
+											<a href="#/single/{{init.id}}">
+												<img src="{{init.image_url}}" alt="">
+											</a>
+											<div class="portfolio-overlay">
+												<a href="{{init.image_url}}" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+												<a href="#/single/{{init.id}}" class="right-icon"><i class="icon-line-ellipsis"></i></a>
+											</div>
+										</div>
+										<div class="portfolio-desc">
+											<h3><a href="#/single/{{init.id}}">{{init.title}}</a></h3>
+											<span>{{init.category}}</span>
+											<p>{{init.text}}</p>
+											<ul class="iconlist">
+												<li><i class="icon-user"></i> <strong>Inicijator:</strong> <a href="#/profile/{{userData.user.id}}">{{userData.user.name}} {{userData.user.surname}}</a></li>
+												<li><i class="icon-calendar3"></i> <strong>Pokrenuto:</strong> {{init.start_date}}</li>
+												<li><i class="icon-thumbs-up"></i> <strong>Broj potpisa:</strong> {{init.signatories}}</li>
+											</ul>
+											<a href="#/single/{{init.id}}" class="button button-dark noleftmargin">Pogledaj detalje</a>
+										</div>
+									</article>
+									
+								</div>
+								<div class="pagination-container topmargin nobottommargin">
+									<ul class="pagination nomargin"></ul>
+								</div>
+							</div>
+						</div>
+						<div class="tab-content clearfix" id="supported-init">
+							<p ng-show="supportedError">Korisnik još uvek nije podržao nijednu inicijativu.</p>
+							<div class="initiatives-wrapper" ng-show="!supportedError">
+								<div id="initiatives-list" class="portfolio grid-container portfolio-1 clearfix">
+									
+									<article class="portfolio-item clearfix" ng-repeat="(index, init) in userData.supportedInits" delayed-scripts>
+										<div class="portfolio-image">
+											<a href="#/single/{{init.id}}">
+												<img src="{{init.image_url}}" alt="">
+											</a>
+											<div class="portfolio-overlay">
+												<a href="{{init.image_url}}" class="left-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+												<a href="#/single/{{init.id}}" class="right-icon"><i class="icon-line-ellipsis"></i></a>
+											</div>
+										</div>
+										<div class="portfolio-desc">
+											<h3><a href="#/single/{{init.id}}">{{init.title}}</a></h3>
+											<span>{{init.category}}</span>
+											<p>{{init.text}}</p>
+											<ul class="iconlist">
+												<li><i class="icon-user"></i> <strong>Inicijator:</strong> <a href="#/profile/{{init.user.id}}">{{init.user.name}} {{init.user.surname}}</a></li>
+												<li><i class="icon-calendar3"></i> <strong>Pokrenuto:</strong> {{init.start_date}}</li>
+												<li><i class="icon-thumbs-up"></i> <strong>Broj potpisa:</strong> {{init.signatories}}</li>
+											</ul>
+											<a href="#/single/{{init.id}}" class="button button-dark noleftmargin">Pogledaj detalje</a>
+										</div>
+									</article>
+									
+								</div>
+								<div class="pagination-container topmargin nobottommargin">
+									<ul class="pagination nomargin"></ul>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+</div>

@@ -1,0 +1,42 @@
+<div class="force-full-screen full-screen section nopadding nomargin noborder ohidden home-background" ng-init="init()">
+
+	<div class="container vertical-middle divcenter clearfix">
+
+		<div class="row center">
+			<a href="#"><img src="img/logo.png" alt="Logo"></a>
+		</div>
+
+		<div class="panel panel-default divcenter noradius noborder login-panel">
+			<div class="panel-body login-panel-body">
+				<form id="login-form" class="nobottommargin" ng-submit="submit()">
+					<h3>Pristupite vašem nalogu</h3>
+
+					<div class="col_full">
+						<label for="login-form-username">Email adresa:</label>
+						<input type="text" id="login-email" name="email" value="" class="form-control not-dark" ng-model="email" />
+					</div>
+
+					<div class="col_full">
+						<label for="login-form-password">Šifra:</label>
+						<input type="password" id="login-password" name="password" value="" class="form-control not-dark" ng-model="password" />
+					</div>
+
+					<div class="col_full">
+						<button class="button button-3d button-black nomargin" id="login-submit" name="login-submit" type="submit" value="login" target="_self">Ulogujte se</button>
+						<span class="fright col_half center submit-label"><small>Podaci su isti kao za vaš fakultetski email nalog.</small></span>
+					</div>
+					
+					<div class="col_full nobottommargin {{alertClass}}">
+						<div class="alert alert-danger">
+							<i class="icon-remove-sign"></i><strong>Greška!</strong> <span>{{alertMessage}}</span>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="row center dark"><small>Copyrights &copy; All Rights Reserved by Aleksandar Tosic</small></div>
+
+	</div>
+
+</div>

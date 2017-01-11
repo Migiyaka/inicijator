@@ -1,0 +1,65 @@
+<div class="dark section nopadding nomargin noborder ohidden" ng-init="init()">
+	<section id="page-title" class="page-title-dark">
+
+		<div class="container clearfix">
+			<h1>Pokrenite inicijativu</h1>
+			<span>Napravite novu inicijativu i pozovite druge da je podrže</span>
+		</div>
+
+	</section>
+	<section id="content">
+		<div class="content-wrap">
+			<div class="container clearfix">
+				<form id="create-form" class="nobottommargin col-xs-8" ng-submit="submit()">
+					<div class="form-group clearfix">
+						<label for="category" class="col_one_fifth">Kategorija *</label>
+						<select id="category" name="category" class="selectpicker category-create col_four_fifth col_last">
+							<option value="Studije">Studije</option>
+							<option value="Život">Život</option>
+							<option value="Sport">Sport</option>
+							<option value="Ishrana">Ishrana</option>
+							<option value="Izlasci">Izlasci</option>
+						</select>
+					</div>
+					<div class="form-group clearfix">
+						<label for="title" class="col_one_fifth">Naslov *</label>
+						<input type="text" id="title" name="title" class="form-control col_four_fifth col_last" ng-model="title">
+					</div>
+					<div class="form-group clearfix">
+						<label for="text" class="col_one_fifth">Tekst *</label>
+						<textarea id="text" name="text" class="form-control col_four_fifth col_last" ng-model="text"></textarea>
+					</div>
+					<div class="form-group clearfix">
+						<label for="image" class="col_one_fifth">Datum završetka *</label>
+						<div class="col_four_fifth col_last">
+							<input id="enddate" name="enddate" type="text" class="form-control" placeholder="GGGG-MM-DD" ng-model="enddate">
+						</div>
+					</div>
+					<div class="form-group clearfix">
+						<label for="image" class="col_one_fifth">Slika *</label>
+						<div class="col_four_fifth col_last">
+							<input id="image" name="image" type="file" class="file-loading" accept="image/*">
+						</div>
+					</div>
+					<div class="form-group clearfix">
+						<label for="google-map" class="col_one_fifth">Lokacija *</label>
+						<div class="col_four_fifth col_last">
+							<input type="text" id="lat" name="lat" ng-show="false" ng-model="lat">
+							<input type="text" id="lng" name="lng" ng-show="false" ng-model="lng">
+							<div id="google-map" class="gmap create-gmap"></div>
+						</div>
+					</div>
+					<div class="form-group clearfix">
+						<div class="col_one_fifth"></div>
+						<div class="col_four_fifth col_last center topmargin-sm">
+							<div class="alert alert-danger" ng-show="error">
+								<i class="icon-remove-sign"></i><strong>Greška!</strong> <span>{{ errorMessage }}</span>
+							</div>
+							<button type="submit" class="button button-xlarge button-dark button-rounded" ng-disabled="buttonDisabled"><i class="fa fa-circle-o-notch fa-spin" ng-show="loading"></i>Pokreni</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+</div>

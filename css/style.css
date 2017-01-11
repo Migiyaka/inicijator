@@ -1,0 +1,354 @@
+/* ------ */
+/* HEADER */
+/* ------ */
+
+#header-wrap {
+	border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+#top-cart, #top-search {
+	margin: 40px 0 40px 20px;
+}
+
+#top-cart a, #top-search a {
+	width: 20px;
+	height: 20px;
+	font-size: 20px;
+}
+
+.user-welcome {
+	margin: 29px 10px;
+	transition: height .4s ease, margin .4s ease, opacity .2s .2s ease;
+}
+
+.user-welcome p {
+	margin: 0;
+}
+
+#header.sticky-header:not(.static-sticky) .user-welcome {
+	margin: 9px 10px;
+}
+
+@media (max-width: 991px) {
+	#top-search a {
+		margin: 40px 10px 40px 0;
+	}
+	
+	.user-welcome {
+		margin: 10px 0 29px 10px;
+	}
+}
+
+/* ------ */
+/* FOOTER */
+/* ------ */
+
+#copyrights {
+	line-height: 35px;
+}
+
+/* ----- */
+/* LOGIN */
+/* ----- */
+
+.submit-label {
+	margin: 0 !important;
+}
+
+.login-panel {
+	max-width: 400px; 
+	background-color: rgba(255,255,255,0.93);
+}
+
+.login-panel-body {
+	padding: 40px;
+}
+
+@media (max-width: 767px) {
+	#login-form .nobottommargin {
+		text-align: center;
+	}
+	
+	.submit-label {
+		margin-bottom: 0 !important;
+		margin-top: 15px !important;
+	}
+}
+
+/* --------------- */
+/* CUSTOM ELEMENTS */
+/* --------------- */
+
+#slider .section {
+	height: 100%;
+}
+
+#slider .section:before {
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	content: "";
+	position: absolute;
+}
+
+#content {
+	min-height: 750px;
+}
+
+.invisible {
+	position: absolute;
+	top: 0;
+	left: -9999px;
+}
+
+#wrapper {
+	transition: all 0s;
+	background-color: #333;
+}
+
+.map-gmap {
+	height: 750px !important;
+}
+
+.create-gmap, .single-gmap {
+	height: 300px !important;
+}
+
+.home-background {
+	background-image: url('../img/background.jpg');
+	background-position: 50% 0;
+}
+
+.fa-spin {
+	top: -1px !important;
+	margin-right: 15px !important;
+}
+
+@media (max-width: 767px) {
+	#top-social, #slider:not(.swiper_wrapper) .slider-caption, .nivo-caption, .flex-caption, .slider-caption p, .slider-caption .button, .camera_caption, .ei-title, .slider-arrow-top-sm, .slider-arrow-bottom-sm {
+		display: block !important;
+	}
+}
+
+/* --------- */
+/* PORTFOLIO */
+/* --------- */
+
+.postcontent .portfolio-1 .portfolio-item .portfolio-image, .postcontent .portfolio-1 .portfolio-item .portfolio-image a, .postcontent .portfolio-1 .portfolio-item .portfolio-image img {
+	max-width: 100%;
+}
+
+.users-column ul {
+	margin: 0;
+}
+
+.portfolio-single-image {
+	padding-left: 45px;
+}
+
+.portfolio-single-content .info-text {
+	white-space: pre-line;
+	margin-top: -15px;
+}
+
+.contributors td:not(:first-child) {
+	width: 30%;
+}
+
+.contributors tbody tr {
+	cursor: pointer;
+}
+
+.contributors tbody tr:hover {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 991px) {
+	.portfolio-single-image {
+		padding-left: 15px;
+		margin-top: 50px;
+	}
+}
+
+/* --------- */
+/* LIST VIEW */
+/* --------- */
+
+.dark .form-control:not(.not-dark), .dark .sm-form-control:not(.not-dark) {
+    border-color: rgba(255,255,255,0.15);
+}
+
+#search-list .bootstrap-select {
+	width: 100% !important;
+}
+
+h5, h6 {
+	margin-bottom: 15px;
+}
+
+.form-group {
+	margin-bottom: 30px;
+}
+
+.input-daterange {
+	width: 100%;
+}
+
+.input-daterange label {
+	display: block;
+}
+
+.input-daterange input:not(:last-child) {
+	margin-bottom: 15px;
+}
+
+#search-list-submit {
+	margin-top: 60px;
+}
+
+#search-list-submit:focus {
+	background-color: rgba(0,0,0,0.2) !important;
+    border-color: rgba(255,255,255,0.15) !important;
+}
+
+#search-list-submit:hover {
+	background-color: rgba(0,0,0,0.3) !important;
+    border-color: rgba(0,0,0,0.25) !important;
+}
+
+/* -------- */
+/* MAP VIEW */
+/* -------- */
+
+.gmap-info-content {
+	color: #282828;
+	width: 400px;
+}
+
+.gmap-info-content a:hover {
+	color: #23527c !important;
+}
+
+.gmap-info-title {
+	color: #282828 !important;
+	margin-bottom: 15px;
+}
+
+.gmap-info-boxes {
+	margin-bottom: 15px;
+}
+
+.gmap-info-boxes span {
+	margin-right: 30px;
+}
+
+.gmap-info-boxes i {
+	margin-right: 5px;
+}
+
+.gmap-info-text {
+	margin-bottom: 0;
+}
+
+/* ----------- */
+/* CREATE PAGE */
+/* ----------- */
+
+#create-form input, textarea, label {
+	margin: 0;
+}
+
+#create-form textarea {
+	min-height: 150px;
+	resize: none;
+}
+
+#create-form .alert {
+	margin-bottom: 50px !important;
+}
+
+/* ----------- */
+/* SINGLE PAGE */
+/* ----------- */
+
+.initiative-title {
+	padding: 0 15px;
+	margin-bottom: 60px;
+}
+
+.initiative-body .alert {
+	margin-bottom: 50px !important;
+}
+
+.commentlist li {
+	margin-left: 0;
+}
+
+.comment-wrap {
+	padding: 20px 35px;
+}
+
+.commentlist li .comment-content {
+	padding: 0;
+}
+
+#submit-comment {
+	text-align: center;
+}
+
+#submit-comment textarea {
+	min-height: 150px;
+	resize: none;
+}
+
+#submit-comment button {
+	margin-top: 30px;
+}
+
+/* ------------ */
+/* PROFILE PAGE */
+/* ------------ */
+
+.side-tabs ul.tab-nav {
+	padding: 0;
+	margin-right: 40px;
+}
+
+.side-tabs ul.tab-nav li a {
+	line-height: 1.5em;
+	padding: 15px;
+}
+
+.side-tabs .tab-container {
+	padding: 0;
+}
+
+.user-info {
+	margin-top: -15px;
+}
+
+.user-info td {
+	padding: 15px;
+}
+
+.user-info td:first-child {
+	font-weight: bold;
+}
+
+#profile-page .postcontent {
+	margin-right: 0;
+}
+
+/* ------------ */
+/* CONTACT PAGE */
+/* ------------ */
+
+#contact-form textarea {
+	min-height: 250px;
+	resize: none;
+	margin: 0;
+}
+
+#contact-form .alert {
+	margin-bottom: 50px !important;
+}

@@ -1,0 +1,100 @@
+<div class="dark section nopadding nomargin noborder ohidden" ng-init="init()">
+	<section id="page-title" class="page-title-dark">
+
+		<div class="container clearfix">
+			<h1>Inicijativa</h1>
+			<span>Pročitajte više o ovoj inicijativi uz mogućnost da je podržite</span>
+		</div>
+
+	</section>
+	<section id="content">
+		<div class="content-wrap">
+			<div class="container clearfix">
+				<p class="initiative-error" ng-show="pageError">Ne postoji tražena inicijativa. Vratite se na <a href="#/list">listu inicijativa</a>.</p>
+				<div class="initiative-body" ng-show="!pageError">
+					<h2 class="initiative-title" ng-repeat="(index, init) in results.initiatives">{{init.title}}</h2>
+					<div class="portfolio-single-content col-md-4 col-xs-12">
+						<div ng-repeat="(index, init) in results.initiatives">
+							<div class="fancy-title title-dotted-border">
+								<h2>Informacije:</h2>
+							</div>
+							<div class="info-text">
+								{{init.text}}
+							</div>
+
+							<div class="line"></div>
+
+							<ul class="portfolio-meta bottommargin">
+								<li><span><i class="icon-user"></i>Inicijator:</span> <a href="#/profile/{{results.users[index].id}}">{{results.users[index].name}} {{results.users[index].surname}}</a></li>
+								<li><span><i class="icon-calendar3"></i>Pokrenuto:</span> {{init.start_date}}</li>
+								<li><span><i class="icon-calendar3"></i>Završava se:</span> {{init.end_date}}</li>
+								<li><span><i class="icon-lightbulb"></i>Kategorija:</span> {{init.category}}</li>
+								<li><span><i class="icon-thumbs-up"></i>Broj potpisa:</span> {{results.signatories[index].length}}</li>
+							</ul>
+						</div>
+						
+						<div class="line"></div>
+						
+						<div id="google-map" class="gmap single-gmap"></div>
+						
+						<div class="fancy-title title-dotted-border topmargin">
+							<h2>Komentari:</h2>
+						</div>
+						<ol class="commentlist clearfix" ng-repeat="(index, init) in results.initiatives">
+							<li class="comment" ng-repeat="(index, comment) in results.comments[index]">
+								<div class="comment-wrap">
+									<div class="comment-content clearfix">
+										<div class="comment-author"><a href="#/profile/{{comment.user_id}}">{{comment.user_name}} {{comment.user_surname}}</a><span>{{comment.date}}</span></div>
+										<p>{{comment.text}}</p>
+									</div>
+								</div>
+							</li>
+						</ol>
+						<form id="submit-comment" class="nobottommargin" ng-submit="submit()">
+							<textarea id="comment" name="comment" class="form-control" ng-model="text"></textarea>
+							<div class="alert alert-danger topmargin" ng-show="commentError">
+								<i class="icon-remove-sign"></i><strong>Greška!</strong> <span>Molimo vas unesite tekst komentara.</span>
+							</div>
+							<button type="submit" class="button button-xlarge button-dark button-rounded" ng-disabled="buttonDisabled">Pošalji</button>
+						</form>
+					</div>
+					<div class="col-md-8 col-xs-12 portfolio-single-image bottommargin-lg">
+						<div class="portfolio-single-content" ng-repeat="(index, init) in results.initiatives" delayed-scripts>
+							<a href="{{init.image_url}}" data-lightbox="image" target="_blank"><img src="{{init.image_url}}" alt=""></a>
+							<div class="fancy-title title-dotted-border topmargin">
+								<h2>Potpisnici:</h2>
+							</div>
+							<table class="table contributors">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Ime</th>
+										<th>Prezime</th>
+										<th>Broj indeksa</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="(index, signatory) in results.signatories[index]" ng-click="loadProfile(signatory.id)">
+										<td>{{index + 1}}</td>
+										<td>{{signatory.name}}</td>
+										<td>{{signatory.surname}}</td>
+										<td>{{signatory.index_no}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="center topmargin-lg">
+							<div class="alert alert-danger" ng-show="supportError">
+								<i class="icon-remove-sign"></i><strong>Greška!</strong> <span>Već ste podržali ovu inicijativu, ne možete je podržati ponovo.</span>
+							</div>
+							<div class="alert alert-info" ng-show="initOver">
+								<i class="icon-hand-up"></i><strong>Obaveštenje.</strong> <span>Ova inicijativa je završena.</span>
+							</div>
+							<button ng-show="supportButton && !initOver" href="" class="button button-xlarge button-dark button-rounded tright" ng-click="support()">Podrži</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
