@@ -25,19 +25,19 @@
 							<table class="user-info">
 								<tr>
 									<td>Ime</td>
-									<td>{{userData.user.name}}</td>
+									<td>{{user.name}}</td>
 								</tr>
 								<tr>
 									<td>Prezime</td>
-									<td>{{userData.user.surname}}</td>
+									<td>{{user.surname}}</td>
 								</tr>
 								<tr>
 									<td>Broj indeksa</td>
-									<td>{{userData.user.index_no}}</td>
+									<td>{{user.index_no}}</td>
 								</tr>
 								<tr>
 									<td>Email adresa</td>
-									<td><a href="mailto:{{userData.user.email}}" target="_blank">{{userData.user.email}}</a>
+									<td><a href="mailto:{{user.email}}" target="_blank">{{user.email}}</a>
 								</tr>
 							</table>
 						</div>
@@ -46,7 +46,7 @@
 							<div class="initiatives-wrapper" ng-show="!createdError">
 								<div id="initiatives-list" class="portfolio grid-container portfolio-1 clearfix">
 									
-									<article class="portfolio-item clearfix" ng-repeat="(index, init) in userData.createdInits" delayed-scripts>
+									<article class="portfolio-item clearfix" ng-repeat="(index, init) in user.createdInits" delayed-scripts>
 										<div class="portfolio-image">
 											<a href="#/single/{{init.id}}">
 												<img src="{{init.image_url}}" alt="">
@@ -59,11 +59,11 @@
 										<div class="portfolio-desc">
 											<h3><a href="#/single/{{init.id}}">{{init.title}}</a></h3>
 											<span>{{init.category}}</span>
-											<p>{{init.text}}</p>
+											<p>{{init.textExcerpt}}</p>
 											<ul class="iconlist">
-												<li><i class="icon-user"></i> <strong>Inicijator:</strong> <a href="#/profile/{{userData.user.id}}">{{userData.user.name}} {{userData.user.surname}}</a></li>
+												<li><i class="icon-user"></i> <strong>Inicijator:</strong> <a href="#/profile/{{user.id}}">{{user.name}} {{user.surname}}</a></li>
 												<li><i class="icon-calendar3"></i> <strong>Pokrenuto:</strong> {{init.start_date}}</li>
-												<li><i class="icon-thumbs-up"></i> <strong>Broj potpisa:</strong> {{init.signatories}}</li>
+												<li><i class="icon-thumbs-up"></i> <strong>Broj potpisa:</strong> {{init.sig_num}}</li>
 											</ul>
 											<a href="#/single/{{init.id}}" class="button button-dark noleftmargin">Pogledaj detalje</a>
 										</div>
@@ -80,7 +80,7 @@
 							<div class="initiatives-wrapper" ng-show="!supportedError">
 								<div id="initiatives-list" class="portfolio grid-container portfolio-1 clearfix">
 									
-									<article class="portfolio-item clearfix" ng-repeat="(index, init) in userData.supportedInits" delayed-scripts>
+									<article class="portfolio-item clearfix" ng-repeat="(index, init) in user.supportedInits" delayed-scripts>
 										<div class="portfolio-image">
 											<a href="#/single/{{init.id}}">
 												<img src="{{init.image_url}}" alt="">
@@ -93,11 +93,11 @@
 										<div class="portfolio-desc">
 											<h3><a href="#/single/{{init.id}}">{{init.title}}</a></h3>
 											<span>{{init.category}}</span>
-											<p>{{init.text}}</p>
+											<p>{{init.textExcerpt}}</p>
 											<ul class="iconlist">
-												<li><i class="icon-user"></i> <strong>Inicijator:</strong> <a href="#/profile/{{init.user.id}}">{{init.user.name}} {{init.user.surname}}</a></li>
+												<li><i class="icon-user"></i> <strong>Inicijator:</strong> <a href="#/profile/{{init.creator.id}}">{{init.creator.name}} {{init.creator.surname}}</a></li>
 												<li><i class="icon-calendar3"></i> <strong>Pokrenuto:</strong> {{init.start_date}}</li>
-												<li><i class="icon-thumbs-up"></i> <strong>Broj potpisa:</strong> {{init.signatories}}</li>
+												<li><i class="icon-thumbs-up"></i> <strong>Broj potpisa:</strong> {{init.sig_num}}</li>
 											</ul>
 											<a href="#/single/{{init.id}}" class="button button-dark noleftmargin">Pogledaj detalje</a>
 										</div>

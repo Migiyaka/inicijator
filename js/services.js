@@ -46,11 +46,12 @@ inicijativaApp.factory('mainService', ['$http', '$location', '$window', '$saniti
 			if (typeof bigMap === undefined) bigMap = false;
 			
 			var infoWindow = new google.maps.InfoWindow();
+			var initiatives = (markerContent.initiative != undefined) ? [markerContent.initiative] : markerContent.initiatives;
 			
-			for (var i = 0; i < markerContent.initiatives.length; i++) {
-				var position = { lat: parseFloat(markerContent.initiatives[i].lat), lng: parseFloat(markerContent.initiatives[i].lng) };
+			for (var i = 0; i < initiatives.length; i++) {
+				var position = { lat: parseFloat(initiatives[i].lat), lng: parseFloat(initiatives[i].lng) };
 				
-				var markerIcon = (bigMap) ? { url: 'img/icons/' + markerContent.initiatives[i].category + '.png', scaledSize: new google.maps.Size(24, 24) } : '';
+				var markerIcon = (bigMap) ? { url: 'img/icons/' + initiatives[i].category + '.png', scaledSize: new google.maps.Size(24, 24) } : '';
 				var marker = new google.maps.Marker({
 					position: position,
 					map: map,
@@ -59,13 +60,13 @@ inicijativaApp.factory('mainService', ['$http', '$location', '$window', '$saniti
 				
 				if (bigMap) {
 					var infoContent = 	'<div class="gmap-info-content">' +
-											'<h4 class="gmap-info-title">' + markerContent.initiatives[i].title + '</h4>' +
+											'<h4 class="gmap-info-title">' + initiatives[i].title + '</h4>' +
 											'<div class="gmap-info-boxes">' +
-												'<span><i class="icon-user"></i><a href="#/profile/' + markerContent.users[i].id + '">' + markerContent.users[i].name + ' ' + markerContent.users[i].surname + '</a></span>' +
-												'<span><i class="icon-calendar3"></i>' + markerContent.initiatives[i].start_date + ' - ' + markerContent.initiatives[i].end_date + '</span>' +
-												'<span><i class="icon-thumbs-up"></i>' + markerContent.signatories[i].length + '</span>' +
+												'<span><i class="icon-user"></i><a href="#/profile/' + initiatives[i].creator.id + '">' + initiatives[i].creator.name + ' ' + initiatives[i].creator.surname + '</a></span>' +
+												'<span><i class="icon-calendar3"></i>' + initiatives[i].start_date + ' do ' + initiatives[i].end_date + '</span>' +
+												'<span><i class="icon-thumbs-up"></i>' + initiatives[i].sig_num + '</span>' +
 											'</div>' +
-											'<p class="gmap-info-text">' + markerContent.initiatives[i].text + '<a href="#/single/' + markerContent.initiatives[i].id + '"> Detaljnije</a></p>' +
+											'<p class="gmap-info-text">' + initiatives[i].textExcerpt + '<a href="#/single/' + initiatives[i].id + '"> Detaljnije</a></p>' +
 										'</div>';
 					
 					marker.customContent = infoContent;
@@ -92,7 +93,6 @@ inicijativaApp.factory('mainService', ['$http', '$location', '$window', '$saniti
 				headers : ajaxHeaders
 						
 			}).then(function success(response) {
-				console.log(response.data);
 				var alert = {message: '', class: 'hidden'};
 				
 				if (response.data.type == 'success') {
@@ -136,38 +136,52 @@ inicijativaApp.factory('mainService', ['$http', '$location', '$window', '$saniti
 		
 		//redirect from login to home page if logged in, redirect to login page from any page if not logged in
 		service.redirectPage = function() {
-			service.getUserData().then(function success(userData) {
-				if ($location.path() == '/' && userData.user.id != '')
+			service.getUserData().then(function success(results) {
+				if ($location.path() == '/' && results.user.id != undefined)
 					$location.path('/home');
-				else if (userData.user.id == '')
+				else if (results.user.id == undefined)
 					$location.path('/');
 			});
 		}
 		
 		//load the initiatives on the list page
-		service.listInitiatives = function(data, textExcerpt) {
-			if (typeof data === undefined) data = '';
-			if (typeof textExcerpt === undefined) textExcerpt = false;
+		service.listInitiatives = function(keywords, categories, startdate_start, startdate_end, enddate_start, enddate_end, orderby) {
+			if (typeof keywords === undefined) keywords = '';
+			if (typeof categories === undefined) categories = '';
+			if (typeof startdate_start === undefined) startdate_start = '';
+			if (typeof startdate_end === undefined) startdate_end = '';
+			if (typeof enddate_start === undefined) enddate_start = '';
+			if (typeof enddate_end === undefined) enddate_end = '';
+			if (typeof orderby === undefined) orderby = '';
 			
 			return $http({
 		
 				method: 'POST',
 				url: ajaxUrl,
-				data: jQuery.param({ action: 'listInitiatives', data: data, textExcerpt: textExcerpt }),
+				data: jQuery.param({ action: 'listInitiatives', keywords: keywords, categories: categories, startdate_start: startdate_start, startdate_end: startdate_end, enddate_start: enddate_start, enddate_end: enddate_end, orderby: orderby }),
 				headers: ajaxHeaders
 				
 			}).then(function success(response) {
-				console.log(response.data);
-				if (response.data.type == 'success') {
-					return response.data;
-				}
+				return response.data;
 			});
 		}
 		
-		service.createInitiative = function(title, text, enddate, lat, lng) {
+		service.singleInitiative = function(id) {
+			return $http({
+				method: 'POST',
+				url: ajaxUrl,
+				data: jQuery.param({ action: 'singleInitiative', id: id }),
+				headers: ajaxHeaders
+			}).then(function success(response) {
+				console.log(response.data);
+				return response.data;
+			});
+		}
+		
+		service.createInitiative = function(title, text, end_date, lat, lng) {
 			return Upload.upload({
 				url: ajaxUrl,
-				data: { action: 'createInitiative', category: jQuery('#category').selectpicker('val'), enddate: enddate, title: $sanitize(title), text: $sanitize(text), lat: lat, lng: lng, image: jQuery('#image').fileinput('getFileStack')[0] }
+				data: { action: 'createInitiative', category: jQuery('#category').selectpicker('val'), end_date: end_date, title: $sanitize(title), text: $sanitize(text), lat: lat, lng: lng, image: jQuery('#image').fileinput('getFileStack')[0] }
 			}).then(function success(response) {
 				if (response.data.type == 'success')
 					$location.path('/list');

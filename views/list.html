@@ -48,10 +48,10 @@
 						<div class="form-group">
 							<h6>Sortiraj po</h6>
 							<select id="orderby" name="orderby" class="selectpicker">
-								<option value="start_date^desc">Datumu pokretanja, najnoviji</option>
-								<option value="start_date^asc">Datumu pokretanja, najstariji</option>
-								<option value="end_date^asc">Datumu završetka, najskoriji</option>
-								<option value="end_date^desc">Datumu završetka, najdalji</option>
+								<option value="start_date_time^desc">Datumu pokretanja, najnoviji</option>
+								<option value="start_date_time^asc">Datumu pokretanja, najstariji</option>
+								<option value="end_date_time^asc">Datumu završetka, najskoriji</option>
+								<option value="end_date_time^desc">Datumu završetka, najdalji</option>
 								<option value="sig_num^desc">Broju potpisa, opadajuće</option>
 								<option value="sig_num^asc">Broju potpisa, rastuće</option>
 							</select>
@@ -77,12 +77,12 @@
 								<div class="portfolio-desc">
 									<h3><a href="#/single/{{init.id}}">{{init.title}}</a></h3>
 									<span>{{init.category}}</span>
-									<p>{{init.text}}</p>
+									<p>{{init.textExcerpt}}</p>
 									<ul class="iconlist">
-										<li><i class="icon-user"></i> <strong>Inicijator:</strong> <a href="#/profile/{{results.users[index].id}}">{{results.users[index].name}} {{results.users[index].surname}}</a></li>
+										<li><i class="icon-user"></i> <strong>Inicijator:</strong> <a href="#/profile/{{init.creator.id}}">{{init.creator.name}} {{init.creator.surname}}</a></li>
 										<li><i class="icon-calendar3"></i> <strong>Pokrenuto:</strong> {{init.start_date}}</li>
 										<li><i class="icon-calendar3"></i> <strong>Završava se:</strong> {{init.end_date}}</li>
-										<li><i class="icon-thumbs-up"></i> <strong>Broj potpisa:</strong> {{results.signatories[index].length}}</li>
+										<li><i class="icon-thumbs-up"></i> <strong>Broj potpisa:</strong> {{init.sig_num}}</li>
 									</ul>
 									<a href="#/single/{{init.id}}" class="button button-dark noleftmargin">Pogledaj detalje</a>
 								</div>

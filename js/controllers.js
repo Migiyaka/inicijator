@@ -4,13 +4,13 @@ inicijativaControllers.controller('mainCtrl', ['$scope', '$route', 'mainService'
 	function($scope, $route, mainService) {
 		$scope.$route = $route;
 		
-		mainService.getUserData().then(function success(userData) {
-			$scope.username = userData.user.name;
+		mainService.getUserData().then(function success(results) {
+			$scope.username = results.user.name;
 		});
 		
 		$scope.loadUserProfile = function() {
-			mainService.getUserData().then(function success(userData) {
-				mainService.loadProfile(userData.user.id);
+			mainService.getUserData().then(function success(results) {
+				mainService.loadProfile(results.user.id);
 			});
 		}
 		
@@ -77,13 +77,15 @@ inicijativaControllers.controller('listCtrl', ['$scope', 'mainService',
 			$scope.isError = false;
 			
 			$scope.keywords = '';
+			$scope.categories = '';
 			$scope.startdate_start = '';
 			$scope.startdate_end = '';
 			$scope.enddate_start = '';
 			$scope.enddate_end = '';
+			$scope.orderby = '';
 			
 			mainService.sharedFunction();
-			mainService.listInitiatives('', true).then(function success(results) {
+			mainService.listInitiatives().then(function success(results) {
 				$scope.results = results;
 				
 				if ($scope.results.initiatives.length == 0 || $scope.results.type == 'error')
@@ -94,21 +96,14 @@ inicijativaControllers.controller('listCtrl', ['$scope', 'mainService',
 		}
 		
 		$scope.submit = function() {
+			$scope.categories = (jQuery('#category').selectpicker('val') == null) ? '' : jQuery('#category').selectpicker('val');
 			$scope.startdate_start = jQuery('#startdate_start').val();
 			$scope.startdate_end = jQuery('#startdate_end').val();
 			$scope.enddate_start = jQuery('#enddate_start').val();
 			$scope.enddate_end = jQuery('#enddate_end').val();
-			
-			var data = '';
-			data += ($scope.keywords != '') ? 'keywords::' + $scope.keywords + '##' : '';
-			data += (jQuery('#category').selectpicker('val') != null) ? 'categories::' + jQuery('#category').selectpicker('val') + '##' : '';
-			data += ($scope.startdate_start != '') ? 'startdate_start::' + $scope.startdate_start + '##' : '';
-			data += ($scope.startdate_end != '') ? 'startdate_end::' + $scope.startdate_end + '##' : '';
-			data += ($scope.enddate_start != '') ? 'enddate_start::' + $scope.enddate_start + '##' : '';
-			data += ($scope.enddate_end != '') ? 'enddate_end::' + $scope.enddate_end + '##' : '';
-			data += (jQuery('#orderby').selectpicker('val') != null) ? 'orderby::' + jQuery('#orderby').selectpicker('val') + '##' : '';
+			$scope.orderby = jQuery('#orderby').selectpicker('val');
 
-			mainService.listInitiatives(data, true).then(function success(results) {
+			mainService.listInitiatives($scope.keywords, $scope.categories, $scope.startdate_start, $scope.startdate_end, $scope.enddate_start, $scope.enddate_end, $scope.orderby).then(function success(results) {
 				$scope.results = results;
 				
 				if ($scope.results.type == 'error' || $scope.results.initiatives.length == 0)
@@ -132,7 +127,7 @@ inicijativaControllers.controller('mapCtrl', ['$scope', 'mainService',
 			
 			$scope.map = mainService.initGoogleMap();
 			
-			mainService.listInitiatives('', true).then(function success(results) {
+			mainService.listInitiatives().then(function success(results) {
 				$scope.results = results;
 				mainService.setMarkers($scope.map, $scope.results, true);
 			});
@@ -209,18 +204,18 @@ inicijativaControllers.controller('singleCtrl', ['$scope', '$routeParams', 'main
 			
 			mainService.sharedFunction();
 			
-			mainService.listInitiatives('id::' + $routeParams.itemId + '##').then(function success(results) {
+			mainService.singleInitiative($routeParams.itemId).then(function success(results) {
 				$scope.results = results;
 				
-				if ($scope.results.type == 'error' || $scope.results.initiatives.length == 0) {
+				if ($scope.results.type == 'error' || $scope.results.initiative.length == 0) {
 					$scope.pageError = true;
 				}
 				else {
 					$scope.map = mainService.initGoogleMap();
-					$scope.initOver = $scope.results.initiatives[0].isOver;
+					$scope.init = $scope.results.initiative;
 					
 					mainService.getUserData().then(function success(userData) {
-						$scope.supportButton = !($scope.results.users[0].id == userData.user.id);
+						$scope.supportButton = !($scope.init.creator.id == userData.user.id);
 					});
 					
 					mainService.setMarkers($scope.map, $scope.results);
@@ -230,14 +225,14 @@ inicijativaControllers.controller('singleCtrl', ['$scope', '$routeParams', 'main
 		
 		$scope.support = function() {
 			
-			mainService.getUserData().then(function success(userData) {
-				var userId = userData.user.id;
+			mainService.getUserData().then(function success(results) {
+				var userId = results.user.id;
 				var alreadySupported = false;
+				console.log(userId);
 				
-				for (var i = 0; i < $scope.results.signatories.length; i++)
-					for (var j = 0; j < $scope.results.signatories[i].length; j++)
-						if ($scope.results.signatories[i][j].id == userId)
-							alreadySupported = true;
+				for (var i = 0; i < $scope.init.signatories.length; i++)
+					if ($scope.init.signatories[i].id == userId)
+						alreadySupported = true;
 				
 				if (!alreadySupported)
 					mainService.supportInitiative($routeParams.itemId);
@@ -275,16 +270,16 @@ inicijativaControllers.controller('profileCtrl', ['$scope', '$routeParams', 'mai
 			
 			mainService.sharedFunction();
 			
-			mainService.getUserData($routeParams.userId, true).then(function success(userData) {
-				$scope.userData = userData;
+			mainService.getUserData($routeParams.userId, true).then(function success(results) {
+				$scope.user = results.user;
 				
-				if ($scope.userData.type == 'error' || $scope.userData.user.id == null)
+				if ($scope.user.type == 'error' || $scope.user.id == null)
 					$scope.pageError = true;
 				
-				if ($scope.userData.createdInits.length == 0)
+				if ($scope.user.createdInits.length == 0)
 					$scope.createdError = true;
 				
-				if ($scope.userData.supportedInits.length == 0)
+				if ($scope.user.supportedInits.length == 0)
 					$scope.supportedError = true;
 			});
 		}
